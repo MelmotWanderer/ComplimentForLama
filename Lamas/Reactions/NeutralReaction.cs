@@ -9,12 +9,22 @@ public class NeutralReaction : LamaReaction
     [SerializeField] private float _angleRotationZ;
     [SerializeField] private float _timeThere;
     [SerializeField] private float _timeBack;
+    private Vector3 _startPosition;
+    private Vector3 _startEulerAngles;
 
+    private void Start()
+    {
+        _startPosition = transform.position;
+        _startEulerAngles = transform.eulerAngles;
+    }
 
 
     public override void React()
     {
-        StopAllCoroutines();
+        StopCoroutine(There());
+        StopCoroutine(Back());
+        transform.position = _startPosition;
+        transform.eulerAngles = _startEulerAngles;
         StartCoroutine(There());
     }
 
